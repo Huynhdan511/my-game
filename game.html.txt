@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trò Chơi Trắc Nghiệm: Tiết Kiệm Năng Lượng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .question-card {
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        
+        .question-card.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .option-button {
+            transition: all 0.2s ease;
+        }
+        
+        .option-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .correct {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        
+        .incorrect {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        .celebration {
+            animation: bounce 0.6s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .energy-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="energy-icon text-6xl mb-4">⚡</div>
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Trò Chơi Trắc Nghiệm</h1>
+            <h2 class="text-2xl font-semibold text-green-600 mb-4">Tiết Kiệm Năng Lượng</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Chào mừng bạn đến với trò chơi trắc nghiệm vui nhộn! Hãy cùng khám phá và tìm hiểu thêm về cách tiết kiệm năng lượng trong cuộc sống hàng ngày.
+            </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-gray-600">Tiến độ</span>
+                <span class="text-sm font-medium text-gray-600" id="progress-text">0/4</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="progress-bar bg-gradient-to-r from-green-500 to-blue-500 h-3 rounded-full" id="progress-bar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container">
+            <!-- Question 1 -->
+            <div class="question-card active bg-white rounded-2xl shadow-lg p-8 mb-6" data-question="1">
+                <div class="flex items-center mb-6">
+                    <div class="bg-green-100 text-green-600 rounded-full w-10 h-10 flex items-center justify-center font-bold mr-4">1</div>
+                    <h3 class="text-xl font-semibold text-gray-800">Việc nào sau đây giúp tiết kiệm điện năng nhiều nhất?</h3>
+                </div>
+                
+                <div class="space-y-3">
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-green-300 bg-gray-50" data-option="A">
+                        <span class="font-semibold text-green-600">A.</span> Để máy tính chạy suốt đêm
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-green-300 bg-gray-50" data-option="B">
+                        <span class="font-semibold text-green-600">B.</span> Tắt thiết bị điện khi không sử dụng
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-green-300 bg-gray-50" data-option="C">
+                        <span class="font-semibold text-green-600">C.</span> Mở tất cả đèn trong nhà vào ban ngày
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-green-300 bg-gray-50" data-option="D">
+                        <span class="font-semibold text-green-600">D.</span> Sử dụng quạt và điều hòa cùng lúc
+                    </button>
+                </div>
+                
+                <div class="explanation hidden mt-6 p-4 bg-green-50 rounded-lg border-l-4 border-green-400">
+                    <p class="text-green-800"><strong>Đáp án đúng: B</strong></p>
+                    <p class="text-green-700 mt-2"><em>Hãy nhớ tắt các thiết bị điện khi không cần thiết để tiết kiệm năng lượng và bảo vệ môi trường!</em></p>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card bg-white rounded-2xl shadow-lg p-8 mb-6 hidden" data-question="2">
+                <div class="flex items-center mb-6">
+                    <div class="bg-blue-100 text-blue-600 rounded-full w-10 h-10 flex items-center justify-center font-bold mr-4">2</div>
+                    <h3 class="text-xl font-semibold text-gray-800">Thiết bị nào sau đây tiêu tốn nhiều điện năng nhất trong gia đình?</h3>
+                </div>
+                
+                <div class="space-y-3">
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 bg-gray-50" data-option="A">
+                        <span class="font-semibold text-blue-600">A.</span> Tủ lạnh
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 bg-gray-50" data-option="B">
+                        <span class="font-semibold text-blue-600">B.</span> Máy giặt
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 bg-gray-50" data-option="C">
+                        <span class="font-semibold text-blue-600">C.</span> Bàn là (bàn ủi)
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 bg-gray-50" data-option="D">
+                        <span class="font-semibold text-blue-600">D.</span> Máy điều hòa không khí
+                    </button>
+                </div>
+                
+                <div class="explanation hidden mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                    <p class="text-blue-800"><strong>Đáp án đúng: D</strong></p>
+                    <p class="text-blue-700 mt-2"><em>Máy điều hòa không khí thường tiêu thụ nhiều điện năng hơn các thiết bị khác, do đó hãy sử dụng một cách hợp lý và tiết kiệm.</em></p>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card bg-white rounded-2xl shadow-lg p-8 mb-6 hidden" data-question="3">
+                <div class="flex items-center mb-6">
+                    <div class="bg-yellow-100 text-yellow-600 rounded-full w-10 h-10 flex items-center justify-center font-bold mr-4">3</div>
+                    <h3 class="text-xl font-semibold text-gray-800">Nguồn năng lượng nào sau đây là <em>năng lượng tái tạo</em>?</h3>
+                </div>
+                
+                <div class="space-y-3">
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-yellow-300 bg-gray-50" data-option="A">
+                        <span class="font-semibold text-yellow-600">A.</span> Than đá
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-yellow-300 bg-gray-50" data-option="B">
+                        <span class="font-semibold text-yellow-600">B.</span> Dầu mỏ
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-yellow-300 bg-gray-50" data-option="C">
+                        <span class="font-semibold text-yellow-600">C.</span> Năng lượng mặt trời
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-yellow-300 bg-gray-50" data-option="D">
+                        <span class="font-semibold text-yellow-600">D.</span> Khí đốt tự nhiên
+                    </button>
+                </div>
+                
+                <div class="explanation hidden mt-6 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                    <p class="text-yellow-800"><strong>Đáp án đúng: C</strong></p>
+                    <p class="text-yellow-700 mt-2"><em>Hãy ưu tiên sử dụng các nguồn năng lượng tái tạo như năng lượng mặt trời để bảo vệ môi trường và nguồn tài nguyên thiên nhiên.</em></p>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card bg-white rounded-2xl shadow-lg p-8 mb-6 hidden" data-question="4">
+                <div class="flex items-center mb-6">
+                    <div class="bg-purple-100 text-purple-600 rounded-full w-10 h-10 flex items-center justify-center font-bold mr-4">4</div>
+                    <h3 class="text-xl font-semibold text-gray-800">Thói quen nào <em>không tốt</em> cho việc tiết kiệm năng lượng?</h3>
+                </div>
+                
+                <div class="space-y-3">
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-purple-300 bg-gray-50" data-option="A">
+                        <span class="font-semibold text-purple-600">A.</span> Rút phích cắm sạc khi không sử dụng
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-purple-300 bg-gray-50" data-option="B">
+                        <span class="font-semibold text-purple-600">B.</span> Sử dụng bóng đèn LED thay vì đèn sợi đốt
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-purple-300 bg-gray-50" data-option="C">
+                        <span class="font-semibold text-purple-600">C.</span> Đóng kín cửa khi bật điều hòa
+                    </button>
+                    <button class="option-button w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-purple-300 bg-gray-50" data-option="D">
+                        <span class="font-semibold text-purple-600">D.</span> Mở tủ lạnh nhiều lần và lâu
+                    </button>
+                </div>
+                
+                <div class="explanation hidden mt-6 p-4 bg-purple-50 rounded-lg border-l-4 border-purple-400">
+                    <p class="text-purple-800"><strong>Đáp án đúng: D</strong></p>
+                    <p class="text-purple-700 mt-2"><em>Thường xuyên mở tủ lạnh sẽ làm tiêu tốn nhiều năng lượng hơn, vì vậy hãy hạn chế mở tủ lạnh nếu không cần thiết.</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="hidden bg-white rounded-2xl shadow-lg p-8 text-center">
+            <div class="text-6xl mb-4">🎉</div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Chúc mừng!</h2>
+            <p class="text-xl text-gray-600 mb-6">Bạn đã hoàn thành bài trắc nghiệm!</p>
+            <div class="bg-gradient-to-r from-green-100 to-blue-100 rounded-lg p-6 mb-6">
+                <p class="text-lg font-semibold text-gray-800">Điểm số của bạn:</p>
+                <p class="text-4xl font-bold text-green-600" id="final-score">0/4</p>
+            </div>
+            <button onclick="restartQuiz()" class="bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-200">
+                Chơi lại
+            </button>
+        </div>
+
+        <!-- Next Button -->
+        <div class="text-center mt-8">
+            <button id="next-btn" onclick="nextQuestion()" class="hidden bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-200">
+                Câu tiếp theo →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            1: 'B',
+            2: 'D', 
+            3: 'C',
+            4: 'D'
+        };
+        
+        let currentQuestion = 1;
+        let score = 0;
+        let answered = false;
+
+        // Add click handlers to all option buttons
+        document.querySelectorAll('.option-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (answered) return;
+                
+                const selectedOption = this.dataset.option;
+                const questionNum = parseInt(this.closest('.question-card').dataset.question);
+                const isCorrect = selectedOption === correctAnswers[questionNum];
+                
+                // Disable all buttons in this question
+                const allButtons = this.closest('.question-card').querySelectorAll('.option-button');
+                allButtons.forEach(btn => {
+                    btn.style.pointerEvents = 'none';
+                    if (btn.dataset.option === correctAnswers[questionNum]) {
+                        btn.classList.add('correct');
+                    } else if (btn === this && !isCorrect) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+                
+                // Show explanation
+                this.closest('.question-card').querySelector('.explanation').classList.remove('hidden');
+                
+                // Update score
+                if (isCorrect) {
+                    score++;
+                    // Add celebration effect
+                    this.classList.add('celebration');
+                }
+                
+                answered = true;
+                
+                // Show next button or results
+                if (currentQuestion < 4) {
+                    document.getElementById('next-btn').classList.remove('hidden');
+                } else {
+                    setTimeout(() => {
+                        showResults();
+                    }, 2000);
+                }
+                
+                // Update progress
+                updateProgress();
+            });
+        });
+
+        function nextQuestion() {
+            // Hide current question
+            document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('hidden');
+            document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('active');
+            
+            // Show next question
+            currentQuestion++;
+            const nextCard = document.querySelector(`[data-question="${currentQuestion}"]`);
+            nextCard.classList.remove('hidden');
+            setTimeout(() => {
+                nextCard.classList.add('active');
+            }, 100);
+            
+            // Hide next button and reset answered state
+            document.getElementById('next-btn').classList.add('hidden');
+            answered = false;
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / 4) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = `${currentQuestion}/4`;
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('final-score').textContent = `${score}/4`;
+            
+            // Add celebration animation
+            document.getElementById('results').classList.add('celebration');
+        }
+
+        function restartQuiz() {
+            // Reset variables
+            currentQuestion = 1;
+            score = 0;
+            answered = false;
+            
+            // Reset UI
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+            
+            // Reset all questions
+            document.querySelectorAll('.question-card').forEach((card, index) => {
+                if (index === 0) {
+                    card.classList.remove('hidden');
+                    card.classList.add('active');
+                } else {
+                    card.classList.add('hidden');
+                    card.classList.remove('active');
+                }
+                
+                // Reset buttons
+                card.querySelectorAll('.option-button').forEach(btn => {
+                    btn.style.pointerEvents = 'auto';
+                    btn.classList.remove('correct', 'incorrect', 'celebration');
+                });
+                
+                // Hide explanations
+                card.querySelector('.explanation').classList.add('hidden');
+            });
+            
+            // Reset progress
+            updateProgress();
+        }
+
+        // Initialize progress
+        updateProgress();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96bfa5e2d295e2fc',t:'MTc1NDY2Mjc1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
